@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gen-Z Ops | Premium Receipt Generator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+    <button id="menu-toggle" class="btn-icon-toggle">☰</button>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside id="input-panel" class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-container">
+                    <span class="logo-icon">⚡</span>
+                    <h1>Gen-Z Ops</h1>
+                </div>
+                <p class="sidebar-tagline">Premium Utility Receipt</p>
+            </div>
+
+            <nav class="sidebar-nav">
+                <button class="nav-item active" data-target="home">
+                    <span class="nav-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    </span> 
+                    <span>Dashboard</span>
+                </button>
+                <button class="nav-item" data-target="generator">
+                    <span class="nav-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    </span> 
+                    <span>Generator</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button id="dark-mode-toggle" class="theme-toggle-btn">
+                    <span class="sun-icon">☀️ Light Mode</span>
+                    <span class="moon-icon">🌙 Dark Mode</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main id="main-content">
+            <!-- Home Page Section -->
+            <section id="home-section" class="content-section">
+                <div class="hero">
+                    <div class="badge">V2.0 Professional</div>
+                    <h2>Elevate Your <span class="text-gradient">Receipts</span></h2>
+                    <p>Solusi pembuatan struk utilitas modern dengan presisi tinggi dan desain profesional.</p>
+                </div>
+
+                <div class="bento-grid">
+                    <div class="bento-item main-card" data-type="listrik">
+                        <div class="bento-content">
+                            <div class="icon-box bg-blue">⚡</div>
+                            <div class="text-box">
+                                <h3>Listrik PLN</h3>
+                                <p>Token & Tagihan Pascabayar</p>
+                            </div>
+                            <button class="btn-action">Konfigurasi</button>
+                        </div>
+                        <div class="bento-bg-pattern"></div>
+                    </div>
+                    
+                    <div class="bento-item secondary-card" data-type="air">
+                        <div class="bento-content">
+                            <div class="icon-box bg-cyan">💧</div>
+                            <div class="text-box">
+                                <h3>PDAM Tirta</h3>
+                                <p>Manajemen Tagihan Air</p>
+                            </div>
+                            <button class="btn-action">Konfigurasi</button>
+                        </div>
+                    </div>
+
+                    <div class="bento-item secondary-card" data-type="wifi">
+                        <div class="bento-content">
+                            <div class="icon-box bg-indigo">🌐</div>
+                            <div class="text-box">
+                                <h3>Internet & Wi-Fi</h3>
+                                <p>ISP & Layanan Berlangganan</p>
+                            </div>
+                            <button class="btn-action">Konfigurasi</button>
+                        </div>
+                    </div>
+
+                    <div class="bento-item info-card">
+                        <div class="bento-content">
+                            <h4>Quick Stats</h4>
+                            <div class="mini-stats">
+                                <div class="stat-pill">
+                                    <span class="label">Ready</span>
+                                    <span class="val">100%</span>
+                                </div>
+                                <div class="stat-pill">
+                                    <span class="label">Formats</span>
+                                    <span class="val">4+</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="features-section">
+                    <div class="section-header">
+                        <h3>Premium Features</h3>
+                        <div class="line"></div>
+                    </div>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="f-icon">✨</div>
+                            <h4>Pixel Perfect</h4>
+                            <p>Hasil cetak tajam sesuai standar industri.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="f-icon">🔒</div>
+                            <h4>Secure Local</h4>
+                            <p>Data diproses di browser Anda, aman & privat.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="f-icon">🚀</div>
+                            <h4>Fast Export</h4>
+                            <p>Konversi instan ke PDF atau Gambar HD.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Generator Section -->
+            <section id="generator-section" class="content-section hidden">
+                <div class="generator-container">
+                    <!-- Left: Form Controls -->
+                    <div id="generator-controls" class="generator-form-panel">
+                        <form id="receipt-form">
+                            <div class="form-group">
+                                <label for="receipt-type">Jenis Layanan</label>
+                                <select id="receipt-type">
+                                    <option value="listrik">Listrik (PLN)</option>
+                                    <option value="air">Air (PDAM)</option>
+                                    <option value="wifi">Wi-Fi / Internet</option>
+                                </select>
+                            </div>
+
+                            <div class="section-title">Informasi Umum</div>
+                            <div class="form-group">
+                                <label for="invoice-number">Nomor Invoice</label>
+                                <div style="display: flex; gap: 5px;">
+                                    <input type="text" id="invoice-number" placeholder="INV/YYYYMMDD/XXX">
+                                    <button type="button" id="btn-gen-invoice" class="btn-secondary" style="padding: 0 10px; width: auto;">Auto</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="vendor-name">Nama Vendor / Toko</label>
+                                <input type="text" id="vendor-name" placeholder="Contoh: PLN Persero / PDAM Tirta">
+                            </div>
+                            <div class="form-group" style="display: flex; gap: 10px;">
+                                <div style="flex: 1;">
+                                    <label for="date">Tanggal</label>
+                                    <input type="date" id="date">
+                                </div>
+                                <div style="flex: 1;">
+                                    <label for="time">Waktu</label>
+                                    <input type="time" id="time">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="customer-name">Nama Pelanggan</label>
+                                <input type="text" id="customer-name" placeholder="Nama Lengkap">
+                            </div>
+                            <div class="form-group">
+                                <label for="customer-id">ID Pelanggan</label>
+                                <input type="text" id="customer-id" placeholder="Nomor Meter / ID">
+                            </div>
+
+                            <!-- Dynamic Utility Inputs -->
+                            <div id="section-listrik">
+                                <div class="section-title">
+                                    Detail Listrik 
+                                    <span class="tip-icon" data-tip="Tips: Isi 'Meter Awal' dan 'Penggunaan (kWh)' untuk menghitung 'Meter Akhir' secara otomatis.">?</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="listrik-mode">Mode</label>
+                                    <select id="listrik-mode">
+                                        <option value="prepaid">Prabayar (Token)</option>
+                                        <option value="postpaid">Pascabayar (Tagihan)</option>
+                                    </select>
+                                </div>
+                                <div id="token-group" class="form-group">
+                                    <label for="token-val">Nomor Token</label>
+                                    <input type="text" id="token-val" placeholder="0000-0000-0000-0000">
+                                </div>
+                                <div class="form-group" style="display: flex; gap: 10px;">
+                                    <div style="flex: 1;">
+                                        <label for="l-meter-start">Meter Awal</label>
+                                        <input type="number" id="l-meter-start" placeholder="0">
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <label for="l-meter-end">Meter Akhir</label>
+                                        <input type="number" id="l-meter-end" placeholder="0">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="l-kwh">Penggunaan (kWh)</label>
+                                    <input type="number" step="0.01" id="l-kwh" placeholder="0.00">
+                                </div>
+                                <div class="form-group">
+                                    <label for="l-tariff">Tarif / Daya</label>
+                                    <input type="text" id="l-tariff" placeholder="R1/900VA">
+                                </div>
+                                <div class="form-group">
+                                    <label for="l-admin">Biaya Admin</label>
+                                    <input type="number" id="l-admin" placeholder="0">
+                                </div>
+                            </div>
+
+                            <div id="section-air" class="hidden">
+                                <div class="section-title">
+                                    Detail Air 
+                                    <span class="tip-icon" data-tip="Tips: Isi 'Meter Awal' dan 'Pemakaian' untuk menghitung 'Meter Akhir' secara otomatis.">?</span>
+                                </div>
+                                <div class="form-group" style="display: flex; gap: 10px;">
+                                    <div style="flex: 1;">
+                                        <label for="a-meter-start">Meter Awal</label>
+                                        <input type="number" id="a-meter-start" placeholder="0">
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <label for="a-meter-end">Meter Akhir</label>
+                                        <input type="number" id="a-meter-end" placeholder="0">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="a-usage">Pemakaian (m³)</label>
+                                    <input type="number" id="a-usage" placeholder="0">
+                                </div>
+                                <div class="form-group">
+                                    <label for="a-fee">Biaya Pemakaian</label>
+                                    <input type="number" id="a-fee" placeholder="0">
+                                </div>
+                                <div class="form-group">
+                                    <label for="a-admin">Biaya Admin</label>
+                                    <input type="number" id="a-admin" placeholder="0">
+                                </div>
+                            </div>
+
+                            <div id="section-wifi" class="hidden">
+                                <div class="section-title">Detail Wi-Fi</div>
+                                <div class="form-group">
+                                    <label for="w-period">Periode Tagihan</label>
+                                    <input type="text" id="w-period" placeholder="Contoh: Maret 2024">
+                                </div>
+                                <div class="form-group">
+                                    <label for="w-plan">Paket / Kecepatan</label>
+                                    <input type="text" id="w-plan" placeholder="Contoh: 50 Mbps">
+                                </div>
+                                <div class="form-group">
+                                    <label for="w-admin">Biaya Admin</label>
+                                    <input type="number" id="w-admin" placeholder="0">
+                                </div>
+                            </div>
+
+                            <div class="section-title">
+                                Pembayaran 
+                                <span id="tip-pay-air" class="tip-icon hidden" data-tip="Tips: Isi 'Biaya Admin' dan 'Total Bayar' untuk menghitung 'Biaya Pemakaian' secara otomatis.">?</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="total-payment">Total Bayar (Rp)</label>
+                                <input type="number" id="total-payment" placeholder="0">
+                            </div>
+
+                            <div class="section-title">Ukuran Kertas</div>
+                            <div class="radio-group">
+                                <label class="radio-option">
+                                    <input type="radio" name="paper-size" value="thermal-58" checked> Thermal 58mm
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="paper-size" value="thermal-80"> Thermal 80mm
+                                </label>
+                            </div>
+
+                            <div class="actions">
+                                <button type="button" id="btn-print" class="btn-secondary">Cetak Langsung</button>
+                                <button type="button" id="btn-download" class="btn-secondary">Download Image</button>
+                                <button type="button" id="btn-preview-mobile" class="btn-secondary btn-mobile-only">👁️ Preview</button>
+                                <button type="button" id="btn-pdf" class="btn-primary">Ekspor PDF</button>
+                                <button type="button" id="btn-reset" class="btn-danger">Reset Form</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Right: Preview Panel -->
+                    <div id="preview-panel" class="generator-preview-panel">
+                    <button type="button" id="btn-close-preview" class="btn-mobile-only">Tutup Preview</button>
+                    <div id="receipt" class="size-thermal-58">
+                        <div class="receipt-header">
+                            <div>
+                                <h2 id="p-vendor-name">VENDOR NAME</h2>
+                                <p>STRUK PEMBAYARAN RESMI</p>
+                            </div>
+                            <div class="receipt-meta">
+                                <p>No: <span id="p-invoice-number">-</span></p>
+                            </div>
+                        </div>
+                        
+                        <div class="receipt-body">
+                            <div class="receipt-row">
+                                <span>Tanggal:</span>
+                                <span id="p-date">-</span>
+                            </div>
+                            <div class="receipt-row">
+                                <span>Waktu:</span>
+                                <span id="p-time">-</span>
+                            </div>
+                            <div class="divider"></div>
+                            
+                            <div class="receipt-row">
+                                <span>Nama:</span>
+                                <span id="p-customer-name">-</span>
+                            </div>
+                            <div class="receipt-row">
+                                <span>ID Pel:</span>
+                                <span id="p-customer-id">-</span>
+                            </div>
+                            
+                            <!-- Listrik Preview -->
+                            <div id="preview-listrik">
+                                <div class="receipt-row">
+                                    <span>Layanan:</span>
+                                    <span>LISTRIK <span id="p-listrik-type">PRABAYAR</span></span>
+                                </div>
+                                <div id="p-token-row">
+                                    <div class="divider"></div>
+                                    <div style="text-align: center; margin: 5px 0;">
+                                        <div>TOKEN:</div>
+                                        <div id="p-token-val" style="font-size: 1.1rem; font-weight: bold;">-</div>
+                                    </div>
+                                    <div class="divider"></div>
+                                </div>
+                                <div class="receipt-row">
+                                    <span>Meter:</span>
+                                    <span><span id="p-l-meter-start">0</span> - <span id="p-l-meter-end">0</span></span>
+                                </div>
+                                <div class="receipt-row">
+                                    <span>Penggunaan:</span>
+                                    <span><span id="p-l-kwh">0</span> kWh</span>
+                                </div>
+                                <div class="receipt-row">
+                                    <span>Tarif/Daya:</span>
+                                    <span id="p-l-tariff">-</span>
+                                </div>
+                                <div class="receipt-row">
+                                    <span>Admin:</span>
+                                    <span id="p-l-admin">Rp 0</span>
+                                </div>
+                            </div>
+
+                            <!-- Air Preview -->
+                            <div id="preview-air" class="hidden">
+                                <div class="receipt-row">
+                                    <span>Layanan:</span>
+                                    <span>AIR (PDAM)</span>
+                                </div>
+                                <div class="receipt-row">
+                                    <span>Meter:</span>
+                                    <span><span id="p-a-meter-start">0</span> - <span id="p-a-meter-end">0</span></span>
+                                </div>
+                                <div class="receipt-row">
+                                    <span>Pemakaian:</span>
+                                    <span><span id="p-a-usage">0</span> m3</span>
+                                </div>
+                                <div class="receipt-row">
+                                    <span>Biaya Air:</span>
+                                    <span id="p-a-fee">Rp 0</span>
+                                </div>
+                                <div class="receipt-row">
+                                    <span>Admin:</span>
+                                    <span id="p-a-admin">Rp 0</span>
+                                </div>
+                            </div>
+
+                            <!-- Wifi Preview -->
+                            <div id="preview-wifi" class="hidden">
+                                <div class="receipt-row">
+                                    <span>Layanan:</span>
+                                    <span>WI-FI / INTERNET</span>
+                                </div>
+                                <div class="receipt-row">
+                                    <span>Periode:</span>
+                                    <span id="p-w-period">-</span>
+                                </div>
+                                <div class="receipt-row">
+                                    <span>Paket:</span>
+                                    <span id="p-w-plan">-</span>
+                                </div>
+                                <div class="receipt-row">
+                                    <span>Admin:</span>
+                                    <span id="p-w-admin">Rp 0</span>
+                                </div>
+                            </div>
+
+                            <div class="divider"></div>
+                            <div class="receipt-row total-row">
+                                <span>TOTAL:</span>
+                                <span id="p-total-payment">Rp 0</span>
+                            </div>
+                        </div>
+
+                        <div class="receipt-footer">
+                            <p>Terima Kasih Atas Pembayaran Anda</p>
+                            <p>Simpan struk ini sebagai bukti pembayaran sah</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        </main>
+    </div>
+
+    <div id="tip-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Tips Penggunaan</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p id="tip-text"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-primary close-modal-btn">Mengerti</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
