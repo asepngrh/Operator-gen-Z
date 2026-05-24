@@ -13,123 +13,220 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
-    <button id="menu-toggle" class="btn-icon-toggle">☰</button>
     <div class="app-container">
         <!-- Sidebar -->
         <aside id="input-panel" class="sidebar">
             <div class="sidebar-header">
                 <div class="logo-container">
-                    <span class="logo-icon">⚡</span>
-                    <h1>Gen-Z Ops</h1>
+                    <div class="logo-orb">
+                        <span class="logo-icon">Z</span>
+                    </div>
+                    <div class="logo-text">
+                        <h1>GEN-Z <span class="highlight">OPS</span></h1>
+                        <p class="sidebar-tagline">Edisi Korporat</p>
+                    </div>
                 </div>
-                <p class="sidebar-tagline">Premium Utility Receipt</p>
             </div>
 
-            <nav class="sidebar-nav">
-                <button class="nav-item active" data-target="home">
-                    <span class="nav-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                    </span> 
-                    <span>Dashboard</span>
-                </button>
-                <button class="nav-item" data-target="generator">
-                    <span class="nav-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
-                    </span> 
-                    <span>Generator</span>
-                </button>
-            </nav>
+            <div class="sidebar-content">
+                <div class="nav-label">Menu Utama</div>
+                <nav class="sidebar-nav">
+                    <button class="nav-item active" data-target="home">
+                        <span class="nav-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                        </span> 
+                        <span>Beranda</span>
+                        <div class="nav-glow"></div>
+                    </button>
+                    <button class="nav-item" data-target="generator">
+                        <span class="nav-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+                        </span> 
+                        <span>Generator</span>
+                        <div class="nav-glow"></div>
+                    </button>
+                    <button class="nav-item" data-target="database">
+                        <span class="nav-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v1"></path><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"></path><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"></path></svg>
+                        </span> 
+                        <span>Database</span>
+                        <div class="nav-glow"></div>
+                    </button>
+                </nav>
+            </div>
 
             <div class="sidebar-footer">
-                <button id="dark-mode-toggle" class="theme-toggle-btn">
-                    <span class="sun-icon">☀️ Light Mode</span>
-                    <span class="moon-icon">🌙 Dark Mode</span>
+                <div class="user-pill">
+                    <div class="user-avatar">AD</div>
+                    <div class="user-info">
+                        <span class="user-name">Konsol Admin</span>
+                        <span class="user-status">Sistem Aktif</span>
+                    </div>
+                </div>
+                <button id="dark-mode-toggle" class="theme-toggle-btn-modern">
+                    <span class="theme-icon">🌓</span>
+                    <span>Ganti Tema</span>
                 </button>
             </div>
         </aside>
 
+        <button id="menu-toggle" class="sidebar-toggle-trigger">
+            <svg class="close-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+
         <!-- Main Content -->
         <main id="main-content">
+            <!-- Background Elements -->
+            <div class="ambient-glow"></div>
+            <div class="grid-overlay"></div>
+
             <!-- Home Page Section -->
             <section id="home-section" class="content-section">
                 <div class="hero">
-                    <div class="badge">V2.0 Professional</div>
-                    <h2>Elevate Your <span class="text-gradient">Receipts</span></h2>
-                    <p>Solusi pembuatan struk utilitas modern dengan presisi tinggi dan desain profesional.</p>
+                    <div class="hero-badge-container">
+                        <span class="hero-badge">V3.0 Edisi Perusahaan</span>
+                    </div>
+                    <h2 class="hero-title">
+                        Buat Struk <span class="text-gradient">Presisi</span> <br>
+                        Layanan Utilitas
+                    </h2>
+                    <p class="hero-description">Pembuatan struk tingkat profesional untuk layanan modern. Akurat, cepat, dan sepenuhnya privat.</p>
+                    <div class="hero-actions">
+                        <button class="btn-primary-large" id="btn-start-now">Mulai Buat Struk</button>
+                        <div class="hero-stats-mini">
+                            <div class="stat"><strong>50rb+</strong> <span>Struk</span></div>
+                            <div class="stat-divider"></div>
+                            <div class="stat"><strong>99.9%</strong> <span>Akurasi</span></div>
+                        </div>
+                    </div>
                 </div>
 
+                <div class="section-label">Pilih Layanan</div>
                 <div class="bento-grid">
                     <div class="bento-item main-card" data-type="listrik">
                         <div class="bento-content">
-                            <div class="icon-box bg-blue">⚡</div>
+                            <div class="bento-header">
+                                <div class="icon-box-premium bg-blue-glow">⚡</div>
+                                <div class="badge-status">Populer</div>
+                            </div>
                             <div class="text-box">
                                 <h3>Listrik PLN</h3>
-                                <p>Token & Tagihan Pascabayar</p>
+                                <p>Kelola token prabayar dan tagihan pascabayar dengan presisi industri.</p>
                             </div>
-                            <button class="btn-action">Konfigurasi</button>
+                            <div class="bento-footer">
+                                <button class="btn-action-premium">Konfigurasi <span>→</span></button>
+                            </div>
                         </div>
-                        <div class="bento-bg-pattern"></div>
+                        <div class="bento-glow"></div>
                     </div>
                     
                     <div class="bento-item secondary-card" data-type="air">
                         <div class="bento-content">
-                            <div class="icon-box bg-cyan">💧</div>
+                            <div class="icon-box-premium bg-cyan-glow">💧</div>
                             <div class="text-box">
                                 <h3>PDAM Tirta</h3>
-                                <p>Manajemen Tagihan Air</p>
+                                <p>Manajemen penagihan air pintar dan akurat.</p>
                             </div>
-                            <button class="btn-action">Konfigurasi</button>
+                            <div class="bento-footer">
+                                <button class="btn-action-premium">Konfigurasi <span>→</span></button>
+                            </div>
                         </div>
                     </div>
 
                     <div class="bento-item secondary-card" data-type="wifi">
                         <div class="bento-content">
-                            <div class="icon-box bg-indigo">🌐</div>
+                            <div class="icon-box-premium bg-indigo-glow">🌐</div>
                             <div class="text-box">
-                                <h3>Internet & Wi-Fi</h3>
-                                <p>ISP & Layanan Berlangganan</p>
+                                <h3>ISP & Wi-Fi</h3>
+                                <p>Langganan internet bulanan dan voucher hotspot.</p>
                             </div>
-                            <button class="btn-action">Konfigurasi</button>
-                        </div>
-                    </div>
-
-                    <div class="bento-item info-card">
-                        <div class="bento-content">
-                            <h4>Quick Stats</h4>
-                            <div class="mini-stats">
-                                <div class="stat-pill">
-                                    <span class="label">Ready</span>
-                                    <span class="val">100%</span>
-                                </div>
-                                <div class="stat-pill">
-                                    <span class="label">Formats</span>
-                                    <span class="val">4+</span>
-                                </div>
+                            <div class="bento-footer">
+                                <button class="btn-action-premium">Konfigurasi <span>→</span></button>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="features-section">
-                    <div class="section-header">
-                        <h3>Premium Features</h3>
-                        <div class="line"></div>
+                <div class="features-section-modern">
+                    <div class="feature-item">
+                        <div class="feature-icon">🛡️</div>
+                        <div class="feature-text">
+                            <h5>Keamanan Sisi Klien</h5>
+                            <p>Data Anda tidak pernah meninggalkan peramban.</p>
+                        </div>
                     </div>
-                    <div class="features-grid">
-                        <div class="feature-card">
-                            <div class="f-icon">✨</div>
-                            <h4>Pixel Perfect</h4>
-                            <p>Hasil cetak tajam sesuai standar industri.</p>
+                    <div class="feature-item">
+                        <div class="feature-icon">📐</div>
+                        <div class="feature-text">
+                            <h5>Presisi Pixel</h5>
+                            <p>Ukuran thermal yang benar untuk printer apa pun.</p>
                         </div>
-                        <div class="feature-card">
-                            <div class="f-icon">🔒</div>
-                            <h4>Secure Local</h4>
-                            <p>Data diproses di browser Anda, aman & privat.</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🏎️</div>
+                        <div class="feature-text">
+                            <h5>Ekspor Instan</h5>
+                            <p>Pembuatan PDF dan Gambar dalam hitungan milidetik.</p>
                         </div>
-                        <div class="feature-card">
-                            <div class="f-icon">🚀</div>
-                            <h4>Fast Export</h4>
-                            <p>Konversi instan ke PDF atau Gambar HD.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Database Section -->
+            <section id="database-section" class="content-section" style="display: none;">
+                <div class="section-label">Aset Data Lokal</div>
+                <div class="db-header">
+                    <h2>Pusat <span class="text-gradient">Pengetahuan</span></h2>
+                    <p>Kelola informasi toko, pelanggan, dan paket layanan yang sudah ditentukan untuk pembuatan struk yang lebih cepat.</p>
+                </div>
+
+                <div class="db-grid">
+                    <div class="db-manager-card">
+                        <div class="card-header-styled">
+                            <div class="title-with-icon">
+                                <span class="icon">📝</span>
+                                <h4>Tambah Data Baru</h4>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>Kategori Aset</label>
+                                <select id="db-category" class="styled-select">
+                                    <option value="vendors">Nama Vendor / Toko</option>
+                                    <option value="customers">Data Pelanggan</option>
+                                    <option value="tokens">Penyimpanan Nomor Token</option>
+                                    <option value="plans">Paket Layanan / Kecepatan</option>
+                                </select>
+                            </div>
+                            <div class="form-group" id="db-input-group">
+                                <label id="db-label-primary">Nama Entri</label>
+                                <input type="text" id="db-value-primary" class="styled-input" placeholder="Masukkan nilai...">
+                            </div>
+                            <div class="form-group" id="db-input-group-secondary" style="display: none;">
+                                <label id="db-label-secondary">ID Sekunder (Opsional)</label>
+                                <input type="text" id="db-value-secondary" class="styled-input" placeholder="Sub-ID atau detail...">
+                            </div>
+                            <button id="btn-save-to-db" class="btn-primary-full">Simpan ke Database</button>
+                        </div>
+                    </div>
+
+                    <div class="db-list-card">
+                        <div class="card-header-styled">
+                            <div class="tabs-mini" id="db-list-tabs">
+                                <button class="tab-mini active" data-cat="vendors">Vendor</button>
+                                <button class="tab-mini" data-cat="customers">Pelanggan</button>
+                                <button class="tab-mini" data-cat="tokens">Token</button>
+                                <button class="tab-mini" data-cat="plans">Paket</button>
+                            </div>
+                        </div>
+                        <div class="card-body-scrollable">
+                            <ul id="db-items-list" class="db-items-list">
+                                <!-- Items injected here -->
+                                <div class="empty-state-db">
+                                    <p>Tidak ada entri ditemukan dalam kategori ini.</p>
+                                </div>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -160,7 +257,9 @@
                             </div>
                             <div class="form-group">
                                 <label for="vendor-name">Nama Vendor / Toko</label>
-                                <input type="text" id="vendor-name" placeholder="Contoh: PLN Persero / PDAM Tirta">
+                                <select id="vendor-name" class="styled-select-generator">
+                                    <option value="" disabled selected>Pilih dari Database...</option>
+                                </select>
                             </div>
                             <div class="form-group" style="display: flex; gap: 10px;">
                                 <div style="flex: 1;">
@@ -174,11 +273,15 @@
                             </div>
                             <div class="form-group">
                                 <label for="customer-name">Nama Pelanggan</label>
-                                <input type="text" id="customer-name" placeholder="Nama Lengkap">
+                                <select id="customer-name" class="styled-select-generator">
+                                    <option value="" disabled selected>Pilih dari Database...</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="customer-id">ID Pelanggan</label>
-                                <input type="text" id="customer-id" placeholder="Nomor Meter / ID">
+                                <select id="customer-id" class="styled-select-generator">
+                                    <option value="" disabled selected>Pilih dari Database...</option>
+                                </select>
                             </div>
 
                             <!-- Dynamic Utility Inputs -->
@@ -196,7 +299,9 @@
                                 </div>
                                 <div id="token-group" class="form-group">
                                     <label for="token-val">Nomor Token</label>
-                                    <input type="text" id="token-val" placeholder="0000-0000-0000-0000">
+                                    <select id="token-val" class="styled-select-generator">
+                                        <option value="" disabled selected>Pilih dari Database...</option>
+                                    </select>
                                 </div>
                                 <div class="form-group" style="display: flex; gap: 10px;">
                                     <div style="flex: 1;">
@@ -214,7 +319,9 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="l-tariff">Tarif / Daya</label>
-                                    <input type="text" id="l-tariff" placeholder="R1/900VA">
+                                    <select id="l-tariff" class="styled-select-generator">
+                                        <option value="" disabled selected>Pilih dari Database...</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="l-admin">Biaya Admin</label>
@@ -259,7 +366,9 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="w-plan">Paket / Kecepatan</label>
-                                    <input type="text" id="w-plan" placeholder="Contoh: 50 Mbps">
+                                    <select id="w-plan" class="styled-select-generator">
+                                        <option value="" disabled selected>Pilih dari Database...</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="w-admin">Biaya Admin</label>

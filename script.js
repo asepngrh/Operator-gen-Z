@@ -19,7 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const navItems = document.querySelectorAll('.nav-item');
     const sections = document.querySelectorAll('.content-section');
     const bentoItems = document.querySelectorAll('.bento-item');
-    const btnActions = document.querySelectorAll('.btn-action');
+    const btnActions = document.querySelectorAll('.btn-action, .btn-action-premium');
+    const btnStartNow = document.getElementById('btn-start-now');
 
     function switchView(target) {
         // Update Nav
@@ -29,7 +30,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Update Sections
         sections.forEach(section => {
-            section.classList.toggle('hidden', section.id !== `${target}-section`);
+            if (section.id === `${target}-section`) {
+                section.style.display = 'block';
+                section.classList.remove('hidden');
+            } else {
+                section.style.display = 'none';
+                section.classList.add('hidden');
+            }
         });
     }
 
@@ -63,12 +70,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    if (btnStartNow) {
+        btnStartNow.addEventListener('click', () => {
+            switchView('generator');
+        });
+    }
+
     // Sidebar Toggle Logic
     if (menuToggle && sidebar) {
         menuToggle.addEventListener('click', (e) => {
             e.stopPropagation();
-            sidebar.classList.toggle('closed');
-            sidebar.classList.toggle('open'); // Mobile support
+            const isClosed = sidebar.classList.contains('closed');
+            if (isClosed) {
+                sidebar.classList.remove('closed');
+                sidebar.classList.add('open');
+            } else {
+                sidebar.classList.add('closed');
+                sidebar.classList.remove('open');
+            }
         });
     }
 
@@ -101,9 +120,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Close sidebar on mobile when clicking outside
     window.addEventListener('click', (e) => {
-        if (window.innerWidth <= 768 && !sidebar.contains(e.target) && e.target !== menuToggle) {
+        if (window.innerWidth <= 768 && !sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
             if (!sidebar.classList.contains('closed')) {
                 sidebar.classList.add('closed');
+                sidebar.classList.remove('open');
             }
         }
     });
@@ -505,6 +525,167 @@ document.addEventListener('DOMContentLoaded', () => {
             toast.classList.remove('show');
         }, 3000);
     }
+
+    // Database Management Logic
+    const dbCategorySelect = document.getElementById('db-category');
+    const dbInputGroupSecondary = document.getElementById('db-input-group-secondary');
+    const dbLabelPrimary = document.getElementById('db-label-primary');
+    const dbValuePrimary = document.getElementById('db-value-primary');
+    const dbValueSecondary = document.getElementById('db-value-secondary');
+    const btnSaveToDb = document.getElementById('btn-save-to-db');
+    const dbItemsList = document.getElementById('db-items-list');
+    const dbListTabs = document.querySelectorAll('.tab-mini');
+
+    let currentDbCategory = 'vendors';
+
+    const dbLabels = {
+        vendors: { primary: 'Nama Vendor', secondary: 'Alamat Toko' },
+        customers: { primary: 'Nama Pelanggan', secondary: 'ID Pelanggan / Nomor Meter' },
+        tokens: { primary: 'Label Token (Misal: Rumah)', secondary: 'Nomor Token 20-Digit' },
+        plans: { primary: 'Nama Paket (Misal: 50 Mbps)', secondary: 'Detail Paket' }
+    };
+
+    function updateDbForm() {
+        if (!dbCategorySelect) return;
+        const labels = dbLabels[dbCategorySelect.value];
+        dbLabelPrimary.textContent = labels.primary;
+        dbValuePrimary.placeholder = `Masukkan ${labels.primary.toLowerCase()}...`;
+        
+        // Show secondary for specific categories
+        if (dbCategorySelect.value === 'customers' || dbCategorySelect.value === 'tokens' || dbCategorySelect.value === 'vendors') {
+            dbInputGroupSecondary.style.display = 'block';
+            document.getElementById('db-label-secondary').textContent = labels.secondary;
+            dbValueSecondary.placeholder = `Masukkan ${labels.secondary.toLowerCase()}...`;
+        } else {
+            dbInputGroupSecondary.style.display = 'none';
+        }
+    }
+
+    if (dbCategorySelect) dbCategorySelect.addEventListener('change', updateDbForm);
+
+    function getDbData(category) {
+        try {
+            const data = localStorage.getItem(`db_${category}`);
+            return data ? JSON.parse(data) : [];
+        } catch (e) {
+            return [];
+        }
+    }
+
+    function saveDbData(category, data) {
+        try {
+            localStorage.setItem(`db_${category}`, JSON.stringify(data));
+            syncDataLists();
+        } catch (e) {
+            showToast('Penyimpanan penuh atau tidak tersedia');
+        }
+    }
+
+    function renderDbList() {
+        if (!dbItemsList) return;
+        const data = getDbData(currentDbCategory);
+        dbItemsList.innerHTML = '';
+
+        if (data.length === 0) {
+            dbItemsList.innerHTML = '<div class="empty-state-db"><p>Tidak ada entri ditemukan dalam kategori ini.</p></div>';
+            return;
+        }
+
+        data.forEach((item, index) => {
+            const li = document.createElement('li');
+            li.className = 'db-item';
+            li.innerHTML = `
+                <div class="db-item-content">
+                    <h5>${item.primary}</h5>
+                    ${item.secondary ? `<p>${item.secondary}</p>` : ''}
+                </div>
+                <button class="btn-delete" data-index="${index}">🗑️</button>
+            `;
+            dbItemsList.appendChild(li);
+        });
+
+        // Delete handlers
+        dbItemsList.querySelectorAll('.btn-delete').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const index = btn.dataset.index;
+                const updatedData = getDbData(currentDbCategory);
+                updatedData.splice(index, 1);
+                saveDbData(currentDbCategory, updatedData);
+                renderDbList();
+                showToast('Entri berhasil dihapus');
+            });
+        });
+    }
+
+    if (dbListTabs) {
+        dbListTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                dbListTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                currentDbCategory = tab.dataset.cat;
+                renderDbList();
+            });
+        });
+    }
+
+    if (btnSaveToDb) {
+        btnSaveToDb.addEventListener('click', () => {
+            const category = dbCategorySelect.value;
+            const primary = dbValuePrimary.value.trim();
+            const secondary = dbValueSecondary.value.trim();
+
+            if (!primary) {
+                showToast('Nilai utama wajib diisi');
+                return;
+            }
+
+            const data = getDbData(category);
+            data.push({ primary, secondary });
+            saveDbData(category, data);
+
+            dbValuePrimary.value = '';
+            dbValueSecondary.value = '';
+            
+            if (currentDbCategory === category) {
+                renderDbList();
+            }
+            showToast(`Berhasil disimpan ke ${category}`);
+        });
+    }
+
+    function syncDataLists() {
+        const vendors = getDbData('vendors');
+        const customers = getDbData('customers');
+        const tokens = getDbData('tokens');
+        const plans = getDbData('plans');
+
+        const populate = (id, items, key = 'primary', placeholder = 'Pilih dari Database...') => {
+            const list = document.getElementById(id);
+            if (!list) return;
+            list.innerHTML = `<option value="" disabled selected>${placeholder}</option>`;
+            
+            // Use a Set to avoid duplicates
+            const uniqueValues = new Set(items.map(item => item[key]).filter(v => v));
+            uniqueValues.forEach(val => {
+                const opt = document.createElement('option');
+                opt.value = val;
+                opt.textContent = val;
+                list.appendChild(opt);
+            });
+        };
+
+        populate('vendor-name', vendors, 'primary', 'Pilih Vendor...');
+        populate('customer-name', customers, 'primary', 'Pilih Nama Pelanggan...');
+        populate('customer-id', customers, 'secondary', 'Pilih ID Pelanggan...');
+        populate('token-val', tokens, 'secondary', 'Pilih Nomor Token...');
+        populate('l-tariff', plans, 'primary', 'Pilih Tarif/Daya...');
+        populate('w-plan', plans, 'primary', 'Pilih Paket/Kecepatan...');
+    }
+
+    // Initialize Database
+    renderDbList();
+    syncDataLists();
+    updateDbForm();
 
     // Initial setup
     generateInvoiceNumber();
