@@ -599,6 +599,7 @@ input:focus, select:focus {
   line-height: 1.4;
   position: relative;
   border-radius: 2px;
+  box-sizing: border-box;
 }
 
 #receipt::before {
@@ -679,9 +680,16 @@ input:focus, select:focus {
 
 .receipt-footer {
   text-align: center;
-  margin-top: 3rem;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px dashed #e2e8f0;
   font-size: 0.75rem;
-  color: #94a3b8;
+  color: #64748b;
+  width: 100%;
+}
+
+.receipt-footer p {
+  margin: 2px 0;
 }
 
 /* Paper Sizes */

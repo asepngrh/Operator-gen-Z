@@ -342,14 +342,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Download Image
     document.getElementById('btn-download').addEventListener('click', () => {
+        // Simpan state asli
+        const originalBoxShadow = receipt.style.boxShadow;
+        receipt.style.boxShadow = 'none';
+
         html2canvas(receipt, {
             scale: 2,
-            backgroundColor: "#ffffff"
+            backgroundColor: "#ffffff",
+            useCORS: true,
+            logging: false,
+            width: receipt.offsetWidth,
+            height: receipt.offsetHeight,
+            onclone: (clonedDoc) => {
+                const clonedReceipt = clonedDoc.getElementById('receipt');
+                clonedReceipt.style.boxShadow = 'none';
+                clonedReceipt.style.margin = '0';
+                clonedReceipt.style.position = 'relative';
+                clonedReceipt.style.display = 'block';
+            }
         }).then(canvas => {
+            receipt.style.boxShadow = originalBoxShadow;
             const link = document.createElement('a');
             link.download = `receipt-${Date.now()}.png`;
-            link.href = canvas.toDataURL('image/png');
+            link.href = canvas.toDataURL('image/png', 1.0);
             link.click();
+        }).catch(err => {
+            console.error("Gagal mendownload gambar:", err);
+            receipt.style.boxShadow = originalBoxShadow;
+            showToast('Gagal memproses gambar! ❌');
         });
     });
 
@@ -364,7 +384,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 scale: 3, 
                 useCORS: true,
                 logging: false,
-                letterRendering: true
+                letterRendering: true,
+                width: receipt.offsetWidth,
+                height: receipt.offsetHeight,
+                onclone: (clonedDoc) => {
+                    const clonedReceipt = clonedDoc.getElementById('receipt');
+                    clonedReceipt.style.boxShadow = 'none';
+                    clonedReceipt.style.margin = '0';
+                    clonedReceipt.style.display = 'block';
+                }
             },
             jsPDF: { 
                 unit: 'mm', 
@@ -380,6 +408,10 @@ document.addEventListener('DOMContentLoaded', () => {
         
         html2pdf().set(opt).from(receipt).save().then(() => {
             receipt.style.boxShadow = originalBoxShadow;
+        }).catch(err => {
+            console.error("Gagal mendownload PDF:", err);
+            receipt.style.boxShadow = originalBoxShadow;
+            showToast('Gagal memproses PDF! ❌');
         });
     });
 
