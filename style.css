@@ -69,6 +69,11 @@ body {
 
 .sidebar.closed {
   transform: translateX(-100%);
+  pointer-events: none;
+}
+
+.sidebar.open {
+  transform: translateX(0);
 }
 
 .sidebar-header {
@@ -720,7 +725,16 @@ input:focus, select:focus {
   .features-grid { grid-template-columns: 1fr; }
 }
 
-/* Animations */
+button, 
+.nav-item, 
+.bento-item, 
+.btn-action, 
+.theme-toggle-btn,
+.close-modal,
+.tip-icon {
+  cursor: pointer;
+  pointer-events: auto;
+}
 @keyframes slideUp {
   from { transform: translateY(20px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }

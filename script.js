@@ -64,22 +64,34 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Sidebar Toggle Logic
-    menuToggle.addEventListener('click', (e) => {
-        e.stopPropagation();
-        sidebar.classList.toggle('closed');
-        // No longer changing textContent as it's a hamburger icon in CSS or hidden
-    });
+    if (menuToggle && sidebar) {
+        menuToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            sidebar.classList.toggle('closed');
+            sidebar.classList.toggle('open'); // Mobile support
+        });
+    }
 
     // Dark Mode Toggle Logic
-    darkModeToggle.addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
-        const isDark = document.body.classList.contains('dark-mode');
-        localStorage.setItem('darkMode', isDark);
-    });
+    if (darkModeToggle) {
+        darkModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            try {
+                localStorage.setItem('darkMode', isDark);
+            } catch (e) {
+                console.warn('Failed to save dark mode preference', e);
+            }
+        });
+    }
 
     // Load Dark Mode Preference
-    if (localStorage.getItem('darkMode') === 'true') {
-        document.body.classList.add('dark-mode');
+    try {
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+        }
+    } catch (e) {
+        console.warn('LocalStorage is not accessible', e);
     }
 
     // Initial sidebar state for mobile
@@ -135,36 +147,44 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // 1. Template Switching
-    receiptType.addEventListener('change', (e) => {
-        const type = e.target.value;
-        
-        // Hide all
-        sectionListrik.classList.add('hidden');
-        sectionAir.classList.add('hidden');
-        sectionWifi.classList.add('hidden');
-        
-        // Hide preview sections
-        document.getElementById('preview-listrik').classList.add('hidden');
-        document.getElementById('preview-air').classList.add('hidden');
-        document.getElementById('preview-wifi').classList.add('hidden');
-        
-        // Show selected
-        if (type === 'listrik') {
-            sectionListrik.classList.remove('hidden');
-            document.getElementById('preview-listrik').classList.remove('hidden');
-            document.getElementById('tip-pay-air').classList.add('hidden');
-        } else if (type === 'air') {
-            sectionAir.classList.remove('hidden');
-            document.getElementById('preview-air').classList.remove('hidden');
-            document.getElementById('tip-pay-air').classList.remove('hidden');
-        } else if (type === 'wifi') {
-            sectionWifi.classList.remove('hidden');
-            document.getElementById('preview-wifi').classList.remove('hidden');
-            document.getElementById('tip-pay-air').classList.add('hidden');
-        }
-        
-        updatePreview();
-    });
+    if (receiptType) {
+        receiptType.addEventListener('change', (e) => {
+            const type = e.target.value;
+            
+            // Hide all
+            [sectionListrik, sectionAir, sectionWifi].forEach(section => {
+                if (section) section.classList.add('hidden');
+            });
+            
+            // Hide preview sections
+            ['preview-listrik', 'preview-air', 'preview-wifi'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.classList.add('hidden');
+            });
+            
+            const tipPayAir = document.getElementById('tip-pay-air');
+            
+            // Show selected
+            if (type === 'listrik') {
+                if (sectionListrik) sectionListrik.classList.remove('hidden');
+                const p = document.getElementById('preview-listrik');
+                if (p) p.classList.remove('hidden');
+                if (tipPayAir) tipPayAir.classList.add('hidden');
+            } else if (type === 'air') {
+                if (sectionAir) sectionAir.classList.remove('hidden');
+                const p = document.getElementById('preview-air');
+                if (p) p.classList.remove('hidden');
+                if (tipPayAir) tipPayAir.classList.remove('hidden');
+            } else if (type === 'wifi') {
+                if (sectionWifi) sectionWifi.classList.remove('hidden');
+                const p = document.getElementById('preview-wifi');
+                if (p) p.classList.remove('hidden');
+                if (tipPayAir) tipPayAir.classList.add('hidden');
+            }
+            
+            updatePreview();
+        });
+    }
 
     // Listrik Toggle (Prepaid/Postpaid)
     const listrikMode = document.getElementById('listrik-mode');
@@ -209,6 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const invoiceInput = document.getElementById('invoice-number');
 
     function generateInvoiceNumber() {
+        if (!invoiceInput) return;
         const now = new Date();
         const year = now.getFullYear();
         const month = String(now.getMonth() + 1).padStart(2, '0');
@@ -219,7 +240,9 @@ document.addEventListener('DOMContentLoaded', () => {
         invoiceInput.dispatchEvent(new Event('input', { bubbles: true }));
     }
 
-    btnGenInvoice.addEventListener('click', generateInvoiceNumber);
+    if (btnGenInvoice) {
+        btnGenInvoice.addEventListener('click', generateInvoiceNumber);
+    }
 
     // Auto Calculation for Electricity Meter
     const lMeterStart = document.getElementById('l-meter-start');
@@ -310,6 +333,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updatePreview() {
+        if (!inputForm) return;
         // Trigger manual update for all fields
         const inputs = inputForm.querySelectorAll('input, select');
         inputs.forEach(input => {
@@ -318,102 +342,137 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 4. Action Buttons
+    // Action Buttons
     
     // Mobile Preview Toggle
     const previewPanel = document.getElementById('preview-panel');
     const btnPreviewMobile = document.getElementById('btn-preview-mobile');
     const btnClosePreview = document.getElementById('btn-close-preview');
 
-    btnPreviewMobile.addEventListener('click', () => {
-        previewPanel.classList.add('show');
-        document.body.style.overflow = 'hidden'; // Prevent scrolling background
-    });
+    if (btnPreviewMobile && previewPanel) {
+        btnPreviewMobile.addEventListener('click', () => {
+            previewPanel.classList.add('show');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling background
+        });
+    }
 
-    btnClosePreview.addEventListener('click', () => {
-        previewPanel.classList.remove('show');
-        document.body.style.overflow = '';
-    });
+    if (btnClosePreview && previewPanel) {
+        btnClosePreview.addEventListener('click', () => {
+            previewPanel.classList.remove('show');
+            document.body.style.overflow = '';
+        });
+    }
 
     // Cetak Langsung
-    document.getElementById('btn-print').addEventListener('click', () => {
-        window.print();
-    });
+    const btnPrint = document.getElementById('btn-print');
+    if (btnPrint) {
+        btnPrint.addEventListener('click', () => {
+            window.print();
+        });
+    }
 
     // Download Image
-    document.getElementById('btn-download').addEventListener('click', () => {
-        // Simpan state asli
-        const originalBoxShadow = receipt.style.boxShadow;
-        receipt.style.boxShadow = 'none';
+    const btnDownload = document.getElementById('btn-download');
+    if (btnDownload) {
+        btnDownload.addEventListener('click', () => {
+            // Simpan state asli
+            if (!receipt) return;
+            const originalBoxShadow = receipt.style.boxShadow;
+            receipt.style.boxShadow = 'none';
 
-        html2canvas(receipt, {
-            scale: 2,
-            backgroundColor: "#ffffff",
-            useCORS: true,
-            logging: false,
-            width: receipt.offsetWidth,
-            height: receipt.offsetHeight,
-            onclone: (clonedDoc) => {
-                const clonedReceipt = clonedDoc.getElementById('receipt');
-                clonedReceipt.style.boxShadow = 'none';
-                clonedReceipt.style.margin = '0';
-                clonedReceipt.style.position = 'relative';
-                clonedReceipt.style.display = 'block';
+            if (typeof html2canvas === 'undefined') {
+                showToast('Library html2canvas belum dimuat! ⚠️');
+                receipt.style.boxShadow = originalBoxShadow;
+                return;
             }
-        }).then(canvas => {
-            receipt.style.boxShadow = originalBoxShadow;
-            const link = document.createElement('a');
-            link.download = `receipt-${Date.now()}.png`;
-            link.href = canvas.toDataURL('image/png', 1.0);
-            link.click();
-        }).catch(err => {
-            console.error("Gagal mendownload gambar:", err);
-            receipt.style.boxShadow = originalBoxShadow;
-            showToast('Gagal memproses gambar! ❌');
-        });
-    });
 
-    // Ekspor PDF
-    document.getElementById('btn-pdf').addEventListener('click', () => {
-        const size = document.querySelector('input[name="paper-size"]:checked').value;
-        const opt = {
-            margin: 0,
-            filename: `receipt-${Date.now()}.pdf`,
-            image: { type: 'jpeg', quality: 1 },
-            html2canvas: { 
-                scale: 3, 
+            html2canvas(receipt, {
+                scale: 2,
+                backgroundColor: "#ffffff",
                 useCORS: true,
                 logging: false,
-                letterRendering: true,
                 width: receipt.offsetWidth,
                 height: receipt.offsetHeight,
                 onclone: (clonedDoc) => {
                     const clonedReceipt = clonedDoc.getElementById('receipt');
-                    clonedReceipt.style.boxShadow = 'none';
-                    clonedReceipt.style.margin = '0';
-                    clonedReceipt.style.display = 'block';
+                    if (clonedReceipt) {
+                        clonedReceipt.style.boxShadow = 'none';
+                        clonedReceipt.style.margin = '0';
+                        clonedReceipt.style.position = 'relative';
+                        clonedReceipt.style.display = 'block';
+                    }
                 }
-            },
-            jsPDF: { 
-                unit: 'mm', 
-                format: getPdfFormat(), 
-                orientation: 'portrait',
-                compress: true
-            }
-        };
-        
-        // Temporary style for export
-        const originalBoxShadow = receipt.style.boxShadow;
-        receipt.style.boxShadow = 'none';
-        
-        html2pdf().set(opt).from(receipt).save().then(() => {
-            receipt.style.boxShadow = originalBoxShadow;
-        }).catch(err => {
-            console.error("Gagal mendownload PDF:", err);
-            receipt.style.boxShadow = originalBoxShadow;
-            showToast('Gagal memproses PDF! ❌');
+            }).then(canvas => {
+                receipt.style.boxShadow = originalBoxShadow;
+                const link = document.createElement('a');
+                link.download = `receipt-${Date.now()}.png`;
+                link.href = canvas.toDataURL('image/png', 1.0);
+                link.click();
+            }).catch(err => {
+                console.error("Gagal mendownload gambar:", err);
+                receipt.style.boxShadow = originalBoxShadow;
+                showToast('Gagal memproses gambar! ❌');
+            });
         });
-    });
+    }
+
+    // Ekspor PDF
+    const btnPdf = document.getElementById('btn-pdf');
+    if (btnPdf) {
+        btnPdf.addEventListener('click', () => {
+            if (!receipt) return;
+            
+            const sizeInput = document.querySelector('input[name="paper-size"]:checked');
+            if (!sizeInput) return;
+            
+            const size = sizeInput.value;
+
+            if (typeof html2pdf === 'undefined') {
+                showToast('Library html2pdf belum dimuat! ⚠️');
+                return;
+            }
+
+            const opt = {
+                margin: 0,
+                filename: `receipt-${Date.now()}.pdf`,
+                image: { type: 'jpeg', quality: 1 },
+                html2canvas: { 
+                    scale: 3, 
+                    useCORS: true,
+                    logging: false,
+                    letterRendering: true,
+                    width: receipt.offsetWidth,
+                    height: receipt.offsetHeight,
+                    onclone: (clonedDoc) => {
+                        const clonedReceipt = clonedDoc.getElementById('receipt');
+                        if (clonedReceipt) {
+                            clonedReceipt.style.boxShadow = 'none';
+                            clonedReceipt.style.margin = '0';
+                            clonedReceipt.style.display = 'block';
+                        }
+                    }
+                },
+                jsPDF: { 
+                    unit: 'mm', 
+                    format: getPdfFormat(), 
+                    orientation: 'portrait',
+                    compress: true
+                }
+            };
+            
+            // Temporary style for export
+            const originalBoxShadow = receipt.style.boxShadow;
+            receipt.style.boxShadow = 'none';
+            
+            html2pdf().set(opt).from(receipt).save().then(() => {
+                receipt.style.boxShadow = originalBoxShadow;
+            }).catch(err => {
+                console.error("Gagal mendownload PDF:", err);
+                receipt.style.boxShadow = originalBoxShadow;
+                showToast('Gagal memproses PDF! ❌');
+            });
+        });
+    }
 
     function getPdfFormat() {
         const size = document.querySelector('input[name="paper-size"]:checked').value;
@@ -423,13 +482,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Reset Form
-    document.getElementById('btn-reset').addEventListener('click', () => {
-        // Using a custom modal or just doing it for Gen-Z vibes
-        inputForm.reset();
-        receiptType.dispatchEvent(new Event('change'));
-        updatePreview();
-        showToast('Formulir telah direset! ✨');
-    });
+    const btnReset = document.getElementById('btn-reset');
+    if (btnReset) {
+        btnReset.addEventListener('click', () => {
+            if (inputForm) inputForm.reset();
+            if (receiptType) receiptType.dispatchEvent(new Event('change'));
+            updatePreview();
+            showToast('Formulir telah direset! ✨');
+        });
+    }
 
     function showToast(message) {
         let toast = document.querySelector('.toast');
